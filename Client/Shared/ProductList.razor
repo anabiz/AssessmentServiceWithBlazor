@@ -1,25 +1,27 @@
-﻿@inject HttpClient Http
+﻿@inject IProductService ProductService
 <h3>Product List</h3>
-<ul>
-    @foreach(var product in  products)
-    {
-        <li class="card">
-            <h4>@product.Name</h4>
-            <p>@product.Price</p>
-        </li>
-    }
-</ul>
+@if(ProductService.Products is null || ProductService.Products.Count == 0)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <ul>
+        @foreach(var product in  ProductService.Products)
+        {
+            <li class="card">
+                <h4>@product.Name</h4>
+                <p>@product.Price</p>
+            </li>
+        }
+    </ul>
+}
+
 
 @code {
-    private static List<ProductDto> products = new List<ProductDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetFromJsonAsync<SuccessResponse<List<ProductDto>>>("api/product/");
-       
-        if(result is  not null && result.Data is not null)
-        {
-            products = result.Data;
-        }
+        await ProductService.GetProducts();
     }
 }

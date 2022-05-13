@@ -1,6 +1,7 @@
 ﻿
 using Application.Contracts;
 using Application.Helpers;
+using AutoMapper;
 using BlazorApp1.Shared;
 using Domain.Entities;
 using Infrastructure.Contracts;
@@ -11,10 +12,12 @@ namespace Infrastructure.Services
     public class ProductService : IProductService
     {
         private readonly IRepositoryManager _repository;
+        private readonly IMapper _mapper;
 
-        public ProductService(IRepositoryManager repository)
+        public ProductService(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public async Task<SuccessResponse<List<ProductDto>>> GetProductsAsync()
@@ -25,7 +28,7 @@ namespace Infrastructure.Services
             
             return new SuccessResponse<List<ProductDto>>()
             {
-                Data = products.ToList(),
+                Data = _mapper.Map<List<ProductDto>>(products),
                 Success = true,
                 Message = "Data successfully retrieved"
             };
