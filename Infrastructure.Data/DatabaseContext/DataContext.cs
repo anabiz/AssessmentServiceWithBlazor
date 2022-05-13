@@ -1,5 +1,6 @@
 ﻿using BlazorApp1.Shared;
 using Domain.Entities;
+using Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DatabaseContext
@@ -10,7 +11,6 @@ namespace Infrastructure.Data.DatabaseContext
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasData(
@@ -39,10 +39,17 @@ namespace Infrastructure.Data.DatabaseContext
                     Price = 105.35M
                 }
             );
+
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(QuestionOptionConfiguration).Assembly);
         }
 
         public DbSet<Product> Products {get; set;}
         public DbSet<Assessment> Assessments { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Option> Options { get; set; }
+        public DbSet<AssessmentQuestion> AssessmentQuestions { get; set; }
+        public DbSet<QuestionOption> QuestionOptions { get; set; }
 
     }
 }

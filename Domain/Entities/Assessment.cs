@@ -4,6 +4,10 @@ namespace Domain.Entities
 {
     public class Assessment
     {
+        public Assessment()
+        {
+            AssessmentQuestions = new HashSet<AssessmentQuestion>();
+        }
         public Guid Id { get; set; }
         public string Status { get; set; } = String.Empty;
         public string Title { get; set; } = String.Empty;
@@ -14,7 +18,7 @@ namespace Domain.Entities
         public int PassMark { get; set; }
         public int NoOfSubmission { get; set; }
         public int Duration { get; set; }
-        public string CompletionTitle { get; set; } = String.Empty;
         public string CompletionMessage { get; set; } = String.Empty;
+        public ICollection<AssessmentQuestion> AssessmentQuestions { get; set; }
     }
 }
