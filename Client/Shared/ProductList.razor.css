@@ -1,0 +1,12 @@
+﻿body {
+}
+.card{
+    max-height: 200px;
+    border: 1px solid groove;
+    max-width: 50%;
+    transition: transform .2s;
+    margin-top: 5px;
+}
+.card:hover{
+    transform: scale(1.1);
+}
