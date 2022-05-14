@@ -60,7 +60,7 @@ namespace BlazorApp1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assessments");
+                    b.ToTable("Assessments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AssessmentQuestion", b =>
@@ -81,7 +81,7 @@ namespace BlazorApp1.Server.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("AssessmentQuestions");
+                    b.ToTable("AssessmentQuestions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Option", b =>
@@ -98,7 +98,7 @@ namespace BlazorApp1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Options");
+                    b.ToTable("Options", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -115,7 +115,7 @@ namespace BlazorApp1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -164,7 +164,7 @@ namespace BlazorApp1.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.QuestionOption", b =>
@@ -185,7 +185,7 @@ namespace BlazorApp1.Server.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionOptions");
+                    b.ToTable("QuestionOptions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AssessmentQuestion", b =>

@@ -41,7 +41,7 @@ namespace Infrastructure.Data.DatabaseContext
             );
 
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(QuestionOptionConfiguration).Assembly);
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(OptionConfiguration).Assembly);
         }
 
         public DbSet<Product> Products {get; set;}
