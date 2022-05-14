@@ -19,6 +19,8 @@ namespace Domain.Entities
         public int NoOfSubmission { get; set; }
         public int Duration { get; set; }
         public string CompletionMessage { get; set; } = String.Empty;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
         public ICollection<AssessmentQuestion> AssessmentQuestions { get; set; }
     }
 }

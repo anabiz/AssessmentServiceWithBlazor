@@ -13,7 +13,9 @@ namespace Domain.Entities
         public string Body { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public int Score { get; set; }
-        public ICollection<QuestionOption> Options { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public ICollection<Option> Options { get; set; }
 
     }
 }

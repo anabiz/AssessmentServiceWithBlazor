@@ -10,6 +10,6 @@ namespace Application.Contracts
         Task DeleteAssessmentAsync(Guid assessmentId);
         Task<SuccessResponse<GetAssessmentDto>> GetAssessmentByIdAsync(Guid assessmentId);
         Task<PagedResponse<ICollection<GetAssessmentDto>>> GetAllAssessmentAsync(ResourceParameter parameter, string name, IUrlHelper urlHelper);
-        Task<SuccessResponse<GetQuestionDto>> CreateAssessmentQuestion(CreateQuestionDto model);
+        Task<SuccessResponse<GetQuestionDto>> CreateAssessmentQuestionAsync(CreateQuestionDto model, Guid assessmentId);
     }
 }

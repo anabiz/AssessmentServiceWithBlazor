@@ -4,6 +4,7 @@ using Infrastructure.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorApp1.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220514182346_addQuestionIdToOption")]
+    partial class addQuestionIdToOption
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace BlazorApp1.Server.Migrations
 
                     b.Property<string>("CompletionMessage")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -60,9 +59,6 @@ namespace BlazorApp1.Server.Migrations
 
                     b.Property<int>("TotalObtainableScore")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -137,25 +133,25 @@ namespace BlazorApp1.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("94a78d3a-bd0c-4b78-88bd-bcbc73b62245"),
+                            Id = new Guid("a78ef284-ea44-4d0a-a2f7-afb1cb820166"),
                             Name = "Lexus 122",
                             Price = 100.35m
                         },
                         new
                         {
-                            Id = new Guid("ad29688d-8f47-48c3-a2ba-c50f8f7bbb82"),
+                            Id = new Guid("ac20cee3-76da-45d7-baa5-0d634f96f2ab"),
                             Name = "Toyota 330",
                             Price = 90.35m
                         },
                         new
                         {
-                            Id = new Guid("cedf3a67-3ed4-44da-af20-160c5dad8d53"),
+                            Id = new Guid("26681817-db85-4c5a-9fa9-27c99b5e19bb"),
                             Name = "Mesdix 992",
                             Price = 105.35m
                         },
                         new
                         {
-                            Id = new Guid("0ab99879-8e59-4cc5-87c1-bb911a4aff2d"),
+                            Id = new Guid("e8141a83-3a78-4ccf-b7c7-0b4bd9bb5871"),
                             Name = "Lexus 992",
                             Price = 105.35m
                         });

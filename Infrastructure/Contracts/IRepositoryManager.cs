@@ -9,6 +9,7 @@ namespace Infrastructure.Contracts
         IQuestionRepository Question { get; }
         IAssessmentQuestionRepository AssessmentQuestion { get; }
         IQuestionOptionRepository QuestionOption { get; }
+        IOptionRepository Option { get; }
 
         Task SaveChangesAsync();
         Task BeginTransaction(Func<Task> action);

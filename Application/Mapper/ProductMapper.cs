@@ -8,7 +8,8 @@ namespace Application.Mapper
     {
         public ProductMapper()
         {
-            CreateMap<Product, ProductDto>();     
+            CreateMap<Product, ProductDto>();
+            CreateMap<Option, GetOptionDto>();
         }
     }
 }

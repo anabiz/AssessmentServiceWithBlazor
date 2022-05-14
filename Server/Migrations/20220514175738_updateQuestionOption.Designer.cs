@@ -4,6 +4,7 @@ using Infrastructure.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorApp1.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220514175738_updateQuestionOption")]
+    partial class updateQuestionOption
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace BlazorApp1.Server.Migrations
 
                     b.Property<string>("CompletionMessage")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -60,9 +59,6 @@ namespace BlazorApp1.Server.Migrations
 
                     b.Property<int>("TotalObtainableScore")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -99,21 +95,13 @@ namespace BlazorApp1.Server.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsAnswer")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("QuestionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Options");
                 });
@@ -137,25 +125,25 @@ namespace BlazorApp1.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("94a78d3a-bd0c-4b78-88bd-bcbc73b62245"),
+                            Id = new Guid("783de6ab-47f8-4b9c-8762-a5057dea0624"),
                             Name = "Lexus 122",
                             Price = 100.35m
                         },
                         new
                         {
-                            Id = new Guid("ad29688d-8f47-48c3-a2ba-c50f8f7bbb82"),
+                            Id = new Guid("20566019-fb95-4d16-8cd4-e3539fbdcb5f"),
                             Name = "Toyota 330",
                             Price = 90.35m
                         },
                         new
                         {
-                            Id = new Guid("cedf3a67-3ed4-44da-af20-160c5dad8d53"),
+                            Id = new Guid("ac0f371b-1383-49d3-8da0-171bcaa43362"),
                             Name = "Mesdix 992",
                             Price = 105.35m
                         },
                         new
                         {
-                            Id = new Guid("0ab99879-8e59-4cc5-87c1-bb911a4aff2d"),
+                            Id = new Guid("8798d777-6eae-4bf9-ab39-db965f329f47"),
                             Name = "Lexus 992",
                             Price = 105.35m
                         });
@@ -173,17 +161,11 @@ namespace BlazorApp1.Server.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -230,15 +212,6 @@ namespace BlazorApp1.Server.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Option", b =>
-                {
-                    b.HasOne("Domain.Entities.Question", null)
-                        .WithMany("Options")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.QuestionOption", b =>
                 {
                     b.HasOne("Domain.Entities.Option", "Option")
@@ -248,7 +221,7 @@ namespace BlazorApp1.Server.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Question", "Question")
-                        .WithMany()
+                        .WithMany("Options")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

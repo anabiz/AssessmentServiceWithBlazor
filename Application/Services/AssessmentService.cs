@@ -7,6 +7,7 @@ using BlazorApp1.Shared;
 using Domain.Entities;
 using Infrastructure.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace Application.Services
@@ -38,9 +39,40 @@ namespace Application.Services
             };
         }
 
-        public Task<SuccessResponse<GetQuestionDto>> CreateAssessmentQuestion(CreateQuestionDto model)
+        public async Task<SuccessResponse<GetQuestionDto>> CreateAssessmentQuestionAsync(CreateQuestionDto model, Guid assessmentId)
         {
-            throw new NotImplementedException();
+            var assessment = await _repository.Assessment.QueryAll(x => x.Id == assessmentId).FirstOrDefaultAsync();
+
+            if (assessment == null)
+                throw new RestException(HttpStatusCode.NotFound, "Assessment not found");
+
+            var question = _mapper.Map<Question>(model);
+            question.AssessmentId = assessment.Id;
+            await _repository.Question.AddAsync(question);
+
+            List<Option> options = new();
+            foreach (var option in model.Options)
+            {
+                var questionOption = _mapper.Map<Option>(option);
+                questionOption.QuestionId = question.Id;
+                options.Add(questionOption);
+            };
+            //await _repository.Option.AddRangeAsync(options);
+            await _repository.SaveChangesAsync();
+
+            var responseQuestionQuery = await _repository.Question.Get(x => x.Id == question.Id)
+                .Include(x => x.Options)
+                .FirstOrDefaultAsync();
+
+            GetQuestionDto response = _mapper.Map<GetQuestionDto>(responseQuestionQuery);
+            
+            return new SuccessResponse<GetQuestionDto>
+            {
+                Data = response,
+                Success = true,
+                Message = "Message successfully created"
+            };
+
         }
 
         public async Task DeleteAssessmentAsync(Guid assessmentId)

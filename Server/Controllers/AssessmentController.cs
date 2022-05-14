@@ -75,5 +75,20 @@ namespace BlazorApp1.Server.Controllers
 
             return Ok(response);
         }
+
+        /// <summary>
+        /// Endpoint to create an assessment question
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost("{id}/data/question")]
+        [ProducesResponseType(typeof(SuccessResponse<GetQuestionDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> CreateAssessmentQuestionAsync(CreateQuestionDto model, Guid id)
+        {
+            var response = await _services.AssessmentService.CreateAssessmentQuestionAsync(model, id);
+
+            return Ok(response);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace Infrastructure
         private readonly Lazy<IQuestionRepository> _questionRepository;
         private readonly Lazy<IAssessmentQuestionRepository> _assessmentQuestionRepository;
         private readonly Lazy<IQuestionOptionRepository> _questionOptionRepository;
+        private readonly Lazy<IOptionRepository> _optionRepository;
 
         public RepositoryManager(DataContext dataContext)
         {
@@ -21,6 +22,7 @@ namespace Infrastructure
             _questionRepository = new Lazy<IQuestionRepository>(() => new QuestionRepository(dataContext));
             _assessmentQuestionRepository = new Lazy<IAssessmentQuestionRepository>(() => new AssessmentQuestionRepository(dataContext));
             _questionOptionRepository = new Lazy<IQuestionOptionRepository>(() => new QuestionOptionRepository(dataContext));
+            _optionRepository = new Lazy<IOptionRepository>(() => new OptionRepository(dataContext));
         }
 
         public IProductRepository Product => _productRepository.Value;
@@ -28,6 +30,8 @@ namespace Infrastructure
         public IAssessmentRepository Assessment => _assessmentRepository.Value;
 
         public IQuestionRepository Question => _questionRepository.Value;
+
+        public IOptionRepository Option => _optionRepository.Value;
 
         public IAssessmentQuestionRepository AssessmentQuestion => _assessmentQuestionRepository.Value;
 
