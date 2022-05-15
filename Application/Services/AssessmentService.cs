@@ -14,6 +14,7 @@ namespace Application.Services
 {
     public class AssessmentService : IAssessmentService
     {
+        #region Settings
         private IRepositoryManager _repository;
         private IMapper _mapper;
 
@@ -22,7 +23,7 @@ namespace Application.Services
             _repository = repository;
             _mapper = mapper;
         }
-
+        #endregion
         public async Task<SuccessResponse<GetAssessmentDto>> CreateAssessmentAsync(CreateAssessmentDto model)
         {
             var assessment = _mapper.Map<Assessment>(model);
@@ -48,6 +49,7 @@ namespace Application.Services
 
             var question = _mapper.Map<Question>(model);
             question.AssessmentId = assessment.Id;
+            question.Score = 1;
             await _repository.Question.AddAsync(question);
 
             List<Option> options = new();
@@ -128,6 +130,27 @@ namespace Application.Services
                 Success = true,
                 Data = _mapper.Map<GetAssessmentDto>(assessment),
                 Message = "Assessment successfully retrieved"
+            };
+        }
+
+        public async Task<SuccessResponse<ICollection<GetQuestionDto>>> GetAssessmentQuestionsAsync(Guid assessmentId)
+        {
+            var assessment = await _repository.Assessment.Get(x => x.Id == assessmentId).FirstOrDefaultAsync();
+
+            if (assessment == null)
+                throw new RestException(HttpStatusCode.NotFound, "Assessment does not exist");
+
+            var questions = await _repository.Question.Get(x => x.AssessmentId == assessmentId)
+                .Include(x => x.Options)
+                .ToArrayAsync();
+
+            var result = _mapper.Map<ICollection<GetQuestionDto>>(questions);
+
+            return new SuccessResponse<ICollection<GetQuestionDto>>
+            {
+                Data = result,
+                Success = true,
+                Message = "Data successfully retrieved"
             };
         }
     }

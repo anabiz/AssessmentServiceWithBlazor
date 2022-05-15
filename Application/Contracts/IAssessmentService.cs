@@ -11,5 +11,6 @@ namespace Application.Contracts
         Task<SuccessResponse<GetAssessmentDto>> GetAssessmentByIdAsync(Guid assessmentId);
         Task<PagedResponse<ICollection<GetAssessmentDto>>> GetAllAssessmentAsync(ResourceParameter parameter, string name, IUrlHelper urlHelper);
         Task<SuccessResponse<GetQuestionDto>> CreateAssessmentQuestionAsync(CreateQuestionDto model, Guid assessmentId);
+        Task<SuccessResponse<ICollection<GetQuestionDto>>> GetAssessmentQuestionsAsync(Guid assessmentId);
     }
 }
