@@ -96,13 +96,28 @@ namespace BlazorApp1.Server.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost("{id}/questions")]
+        [HttpGet("{id}/questions")]
         [ProducesResponseType(typeof(SuccessResponse<ICollection<GetQuestionDto>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAssessmentQuestionsAsync( Guid id)
         {
             var response = await _services.AssessmentService.GetAssessmentQuestionsAsync(id);
 
             return Ok(response);
+        }
+
+
+        /// <summary>
+        /// Endpoint to delete an assessment question
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("question/{id}")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public async Task<IActionResult> DeleteQuestionAsync(Guid id)
+        {
+            await _services.AssessmentService.DeleteQuestionAsync(id);
+
+            return NoContent();
         }
     }
 }

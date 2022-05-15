@@ -89,6 +89,23 @@ namespace Application.Services
 
         }
 
+        public async Task DeleteQuestionAsync(Guid questionId)
+        {
+            var question = await _repository.Question.Get(x => x.Id == questionId)
+             .Include(x => x.Options)
+             .FirstOrDefaultAsync();
+
+            if (question is null)
+                throw new RestException(HttpStatusCode.NotFound, "Question not found");
+
+            _repository.Question.Remove(question);
+
+            if(question.Options.Count() > 0)
+            _repository.Option.RemoveRange(question.Options);
+
+            await _repository.SaveChangesAsync();
+        }
+
         public async Task<PagedResponse<ICollection<GetAssessmentDto>>> GetAllAssessmentAsync(ResourceParameter parameter, string name, IUrlHelper urlHelper)
         {
             var assessmentsQuery = _repository.Assessment.QueryAll();
@@ -135,12 +152,9 @@ namespace Application.Services
 
         public async Task<SuccessResponse<ICollection<GetQuestionDto>>> GetAssessmentQuestionsAsync(Guid assessmentId)
         {
-            var assessment = await _repository.Assessment.Get(x => x.Id == assessmentId).FirstOrDefaultAsync();
+            var assessment = await GetAssessment(assessmentId);
 
-            if (assessment == null)
-                throw new RestException(HttpStatusCode.NotFound, "Assessment does not exist");
-
-            var questions = await _repository.Question.Get(x => x.AssessmentId == assessmentId)
+            var questions = await _repository.Question.Get(x => x.AssessmentId == assessment.Id)
                 .Include(x => x.Options)
                 .ToArrayAsync();
 
@@ -153,5 +167,17 @@ namespace Application.Services
                 Message = "Data successfully retrieved"
             };
         }
+
+        #region reusuables
+        private async Task<Assessment> GetAssessment(Guid assessmentId)
+        {
+            var assessment = await _repository.Assessment.Get(x => x.Id == assessmentId).FirstOrDefaultAsync();
+
+            if (assessment == null)
+                throw new RestException(HttpStatusCode.NotFound, "Assessment does not exist");
+
+            return assessment;
+        }
+        #endregion
     }
 }
