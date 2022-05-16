@@ -1,11 +1,15 @@
 ﻿using BlazorApp1.Shared;
 using Domain.Entities;
+using Domain.Entities.Identities;
+using Domain.Entities.Organizations;
 using Infrastructure.Data.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.DatabaseContext
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User, Role, Guid,
+        UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -50,6 +54,10 @@ namespace Infrastructure.Data.DatabaseContext
         public DbSet<Option> Options { get; set; }
         public DbSet<AssessmentQuestion> AssessmentQuestions { get; set; }
         public DbSet<QuestionOption> QuestionOptions { get; set; }
+        public override DbSet<User> Users { get; set; }
+        public DbSet<UserActivity> UserActivities { get; set; }
+        public DbSet<Token> Tokens { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
 
     }
 }
